@@ -3,7 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "lint": "if-env NODE_ENV=CI && npm run lint: || npm run lint:fix",
+    "lint:": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "start": "if-env npm_config_debug=true && npm run start:debug || npm run start:",
+    "start:": "node ./bin/www",
+    "start:debug": "cross-env DEBUG=RRS:* npm run start:"
   },
   "dependencies": {
     "cookie-parser": "1.4.3",
@@ -11,6 +16,13 @@
     "express": "4.16.4",
     "hbs": "4.0.1",
     "http-errors": "1.7.1",
+    "if-env": "1.0.4",
     "morgan": "1.9.1"
+  },
+  "devDependencies": {
+    "cross-env": "5.2.0",
+    "eslint": "5.9.0",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-plugin-import": "2.14.0"
   }
 }
