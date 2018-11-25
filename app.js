@@ -19,6 +19,17 @@ io.on('connection', (socket) => {
       isRover: type === 'rover',
     });
   });
+
+  socket.on('disconnect', () => {
+    for (let i = 0; i < connections.length; i += 1) {
+      if (connections[i].id !== socket.id) {
+        continue;
+      }
+
+      connections.splice(i);
+      break;
+    }
+  });
 });
 
 app.get('/', (req, res) => {
@@ -29,7 +40,7 @@ app.get('/:a/:b', (req, res) => {
   const a = io.sockets.connected[req.params.a];
   const b = io.sockets.connected[req.params.b];
   if (a === undefined || b === undefined) {
-    res.redirect('/', 418);
+    res.redirect(418, '/');
     return;
   }
 
@@ -39,7 +50,7 @@ app.get('/:a/:b', (req, res) => {
   /**
    * The server successfully processed the request and is not returning any content.
    */
-  res.redirect('/', 204);
+  res.redirect(204, '/');
 });
 
 app.listen(port, () => debug(`Example app listening on port ${port}!`));
