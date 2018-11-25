@@ -9,4 +9,5 @@ rules:
     - max: 1
       maxBOF: 0
       maxEOF: 1
+  no-continue: 0
   no-param-reassign: 0

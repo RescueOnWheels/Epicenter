@@ -48,7 +48,18 @@
     });    
 
     $( `#connect`).click(function() {
-        $.get(`/${$("#client-a").text()}/${$("#client-b").text()}`);
+        const a = $("#client-a").text();
+        const b = $("#client-b").text();
+
+        if(a === undefined || a === '') {
+            return;
+        }
+
+        if(b === undefined || b === '') {
+            return;
+        }
+
+        $.get(`/${a}/${b}`);
         $("#client-a").empty();
         $("#client-b").empty();
     });
