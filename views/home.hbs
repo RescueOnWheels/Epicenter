@@ -1,0 +1,55 @@
+<style>
+    .left, .right {
+        width: 50%;
+        float: left;
+    }
+</style>
+
+<div class="left">
+    <h1>Cockpit</h1>
+    <div class="cockpits">
+        {{#each cockpits}}
+            <div class="cockpit" id="{{this.id}}">
+            {{this.id}} ({{this.ip}})
+            </div>
+        {{/each}}
+    </div>
+
+    <h1>Rover</h1>
+    {{#each rovers}}
+        <div class="rover" id="{{this.id}}">
+           {{this.id}} ({{this.ip}})
+        </div>
+    {{/each}}
+</div>
+
+<div class="right">
+    <h1>Connection Queue</h1>
+    <div id="client-a"></div>
+    <div id="client-b"></div>
+
+    <button id="connect">Connect</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script>
+    $( ".cockpit" ).each(function( index, obj ) {
+        $( `#${obj.id}`).click(function() {
+            $("#client-a").empty();
+            $("#client-a").append(obj.id);
+        });
+    });
+
+    $( ".rover" ).each(function( index, obj ) {
+        $( `#${obj.id}`).click(function() {
+            $("#client-b").empty();
+            $("#client-b").append(obj.id);
+        });
+    });    
+
+    $( `#connect`).click(function() {
+        $.get(`/${$("#client-a").text()}/${$("#client-b").text()}`);
+        $("#client-a").empty();
+        $("#client-b").empty();
+    });
+</script>
