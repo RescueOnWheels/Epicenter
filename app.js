@@ -26,7 +26,7 @@ io.on('connection', (socket) => {
         continue;
       }
 
-      connections.splice(i);
+      connections.splice(i, 1);
       break;
     }
   });
